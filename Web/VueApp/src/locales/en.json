@@ -1,0 +1,30 @@
+{
+  "common": {
+    "app": {
+      "name": "Vue Base Enterprise",
+      "version": "ver.1.0.0",
+      "sidebar_default_menu": "Menu"
+    },
+    "buttons": {
+      "submit": "Submit",
+      "close": "Close",
+      "cancel": "Cancel"
+    }
+  },
+  "errors": {
+    "404": {
+      "tagline": "Oops! Page not found",
+      "title": "404",
+      "caption1": "We are sorry, but the page that you are looking for is unavailable as of the moment.",
+      "caption2": "Please try again later.",
+      "button_text": "Go home"
+    },
+    "500": {
+      "tagline": "Something went wrong!",
+      "title": "500",
+      "caption1": "We're unable to find out what's happening.",
+      "caption2": "Please try again later.",
+      "button_text": "Get me out of here!"
+    }
+  }
+}

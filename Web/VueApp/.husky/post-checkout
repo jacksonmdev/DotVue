@@ -1,0 +1,3 @@
+if [ -d "node_modules/.cache" ]; then
+  rm -r node_modules/.cache
+fi
