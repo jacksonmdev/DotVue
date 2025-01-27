@@ -17,6 +17,7 @@ public static class SetupDependency
         builder.AddInfrastructureServices();
         
         // Add services to the container.
+        builder.SetCors();
         builder.SetAuth();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
