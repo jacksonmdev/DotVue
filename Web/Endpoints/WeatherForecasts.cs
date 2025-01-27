@@ -8,13 +8,14 @@ public class WeatherForecasts : CarterModule
 {
     public WeatherForecasts() : base("/weather")
     {
+        WithTags("Weather Forecast");
     }
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("auth", () => "Hello from Get Process!").RequireAuthorization();
+        app.MapGet("private", () => "You should not be seeing this!").RequireAuthorization();
 
-        app.MapGet("test", async (ISender sender) =>
+        app.MapGet("public", async (ISender sender) =>
             Results.Ok(await sender.Send(new GetWeatherForecastsQuery())));
     }
 }

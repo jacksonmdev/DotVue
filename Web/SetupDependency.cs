@@ -11,6 +11,7 @@ public static class SetupDependency
     {
         builder.AddServiceDefaults();
         builder.Services.AddCarter();
+        builder.Services.AddEndpointsApiExplorer();
 
         // Add architecture services
         builder.AddApplicationServices();
@@ -19,21 +20,22 @@ public static class SetupDependency
         // Add services to the container.
         builder.SetCors();
         builder.SetAuth();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
+        builder.SetOpenApi();
     }
 
     public static void PostInitializeWebServices(this WebApplication app)
     {
-        app.MapDefaultEndpoints();
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        app.UseSwaggerUi(settings =>
         {
-            app.MapOpenApi();
-        }
-
+            settings.Path = "/api";
+            settings.DocumentPath = "/api/specification.json";
+            settings.DocumentTitle = "DotVue API Explorer";
+        });
+        
+        app.MapDefaultEndpoints();
         app.MapCarter();
         app.UseHttpsRedirection();
+        app.UseStaticFiles();
         app.UseAuthentication();
         app.UseAuthorization();
     }
