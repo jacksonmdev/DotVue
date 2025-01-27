@@ -2,7 +2,7 @@
 
 namespace Infrastructure;
 
-public static class Extensions
+public static class SetupDependency
 {
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
