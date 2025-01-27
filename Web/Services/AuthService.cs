@@ -10,7 +10,7 @@ public static class AuthService
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        });
+        }).AddJwtBearer();
         
         builder.Services.AddAuthorization();
     }
