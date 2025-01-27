@@ -5,14 +5,15 @@ var database = builder.AddPostgres("app-db")
     .WithPgAdmin();
 
 var api = builder.AddProject<Projects.Web>("app-api")
+    .WithExternalHttpEndpoints()
     .WithReference(database)
     .WaitFor(database);
 
 builder.AddNpmApp("app-vue", "../Web/VueApp")
     .WithReference(api)
     .WaitFor(api)
-    //.WithHttpEndpoint(env: "8080")
-    //.WithExternalHttpEndpoints()
+    .WithHttpEndpoint(targetPort: 4000, port: 8080)
+    .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
 builder.Build().Run();
