@@ -1,0 +1,51 @@
+{
+  "name": "purple",
+  "private": true,
+  "version": "1.0.1",
+  "type": "module",
+  "scripts": {
+    "commitlint": "commitlint --edit",
+    "start": "vite",
+    "start:qa": "vite --mode qa",
+    "start:prod": "vite --mode prod",
+    "build:qa": "cross-env NODE_ENV=staging npx eslint ./ && vue-tsc && vite build --mode qa",
+    "build:prod": "cross-env NODE_ENV=production npx eslint ./ && vue-tsc && vite build --mode prod",
+    "lint": "cross-env NODE_ENV=local npx eslint ./",
+    "lint:prod": "cross-env NODE_ENV=production npx eslint ./",
+    "preview": "vite preview",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.15",
+    "@types/isotope-layout": "^3.0.14",
+    "@unhead/vue": "^1.11.18",
+    "@vueuse/core": "^12.4.0",
+    "isotope-layout": "^3.0.6",
+    "pinia": "^2.3.0",
+    "pinia-plugin-persistedstate": "^4.2.0",
+    "quasar": "^2.17.7",
+    "vue": "^3.5.13",
+    "vue-i18n": "^11.0.1",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/js": "^9.18.0",
+    "@quasar/vite-plugin": "^1.9.0",
+    "@types/node": "^22.10.7",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/tsconfig": "^0.7.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.18.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "sass": "^1.83.4",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0",
+    "vite": "^6.0.7",
+    "vue-tsc": "^2.2.0"
+  }
+}

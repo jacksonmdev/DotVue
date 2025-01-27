@@ -1,0 +1,14 @@
+{
+  "common": {
+    "app": {
+      "name": "Vue Base Enterprise v1.0",
+      "version": "ver.1.0.0",
+      "sidebar_default_menu": "Main Menu"
+    },
+    "buttons": {
+      "submit": "Submit",
+      "close": "Close",
+      "cancel": "Cancel"
+    }
+  }
+}
