@@ -1,6 +1,7 @@
 using Application;
 using Carter;
 using Infrastructure;
+using Web.Services;
 
 namespace Web;
 
@@ -16,6 +17,7 @@ public static class SetupDependency
         builder.AddInfrastructureServices();
         
         // Add services to the container.
+        builder.SetAuth();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
     }
@@ -29,7 +31,9 @@ public static class SetupDependency
             app.MapOpenApi();
         }
 
-        app.UseHttpsRedirection();
         app.MapCarter();
+        app.UseHttpsRedirection();
+        app.UseAuthentication();
+        app.UseAuthorization();
     }
 }
