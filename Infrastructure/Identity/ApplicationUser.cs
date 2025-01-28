@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Infrastructure.Identity;
 
-public class ApplicationUser
+public class ApplicationUser : IdentityUser
 {
     
 }
