@@ -1,5 +1,5 @@
 using Application;
-using Carter;
+// using Carter;
 using Infrastructure;
 using Web.Services;
 
@@ -10,7 +10,7 @@ public static class SetupDependency
     public static void InitializeWebServices(this IHostApplicationBuilder builder)
     {
         builder.AddServiceDefaults();
-        builder.Services.AddCarter();
+        // builder.Services.AddCarter();
         builder.Services.AddEndpointsApiExplorer();
 
         // Add architecture services
@@ -33,7 +33,7 @@ public static class SetupDependency
         });
         
         app.MapDefaultEndpoints();
-        app.MapCarter();
+        // app.MapCarter();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseCors("CORS");
