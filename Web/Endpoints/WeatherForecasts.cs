@@ -16,6 +16,6 @@ public class WeatherForecasts : CarterModule
         app.MapGet("private", () => "You should not be seeing this!").RequireAuthorization();
 
         app.MapGet("public", async (ISender sender) =>
-            Results.Ok(await sender.Send(new GetWeatherForecastsQuery())));
+            await sender.Send(new GetWeatherForecastsQuery()));
     }
 }

@@ -17,7 +17,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IWeather_ForecastClient {
     getWeatherPrivate(): Observable<string>;
-    getWeatherPublic(): Observable<void>;
+    getWeatherPublic(): Observable<WeatherForecast[]>;
 }
 
 @Injectable({
@@ -82,7 +82,7 @@ export class Weather_ForecastClient implements IWeather_ForecastClient {
         return _observableOf(null as any);
     }
 
-    getWeatherPublic(): Observable<void> {
+    getWeatherPublic(): Observable<WeatherForecast[]> {
         let url_ = this.baseUrl + "/weather/public";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -90,6 +90,7 @@ export class Weather_ForecastClient implements IWeather_ForecastClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Accept": "application/json"
             })
         };
 
@@ -100,14 +101,14 @@ export class Weather_ForecastClient implements IWeather_ForecastClient {
                 try {
                     return this.processGetWeatherPublic(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<WeatherForecast[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<WeatherForecast[]>;
         }));
     }
 
-    protected processGetWeatherPublic(response: HttpResponseBase): Observable<void> {
+    protected processGetWeatherPublic(response: HttpResponseBase): Observable<WeatherForecast[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -116,7 +117,17 @@ export class Weather_ForecastClient implements IWeather_ForecastClient {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(WeatherForecast.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -125,6 +136,54 @@ export class Weather_ForecastClient implements IWeather_ForecastClient {
         }
         return _observableOf(null as any);
     }
+}
+
+export class WeatherForecast implements IWeatherForecast {
+    date?: Date;
+    temperatureC?: number;
+    temperatureF?: number;
+    summary?: string | undefined;
+
+    constructor(data?: IWeatherForecast) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
+            this.temperatureC = _data["temperatureC"];
+            this.temperatureF = _data["temperatureF"];
+            this.summary = _data["summary"];
+        }
+    }
+
+    static fromJS(data: any): WeatherForecast {
+        data = typeof data === 'object' ? data : {};
+        let result = new WeatherForecast();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        data["temperatureC"] = this.temperatureC;
+        data["temperatureF"] = this.temperatureF;
+        data["summary"] = this.summary;
+        return data;
+    }
+}
+
+export interface IWeatherForecast {
+    date?: Date;
+    temperatureC?: number;
+    temperatureF?: number;
+    summary?: string | undefined;
 }
 
 export class SwaggerException extends Error {

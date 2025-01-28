@@ -36,6 +36,7 @@ public static class SetupDependency
         app.MapCarter();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+        app.UseCors("CORS");
         app.UseAuthentication();
         app.UseAuthorization();
     }
