@@ -35,6 +35,6 @@ public static class SetupDependency
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        builder.Services.AddTransient<IUserService, UserService>();
+        builder.Services.AddTransient<IIdentityService, IdentityService>();
     }
 }
