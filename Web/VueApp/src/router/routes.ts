@@ -8,7 +8,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     meta: {
-      breadCrumbHead: 'Vue Base Enterprise',
+      breadCrumbHead: 'DotVue Architecture',
     },
     component: () => import('src/layouts/main-layout.vue'),
     children: [

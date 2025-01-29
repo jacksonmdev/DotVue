@@ -1,7 +1,7 @@
 {
   "common": {
     "app": {
-      "name": "Vue Base Enterprise",
+      "name": "DotVue Architecture",
       "version": "ver.1.0.0",
       "sidebar_default_menu": "Menu"
     },

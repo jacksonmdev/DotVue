@@ -1,7 +1,7 @@
 
-# Vue Base Enterprise Documentation
+# DotVue Architecture Documentation
 
-Welcome to the **Vue Base Enterprise** project! This documentation provides an overview of the project's structure, setup instructions, and guidelines for contributing.
+Welcome to the **DotVue Architecture** project! This documentation provides an overview of the project's structure, setup instructions, and guidelines for contributing.
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ Welcome to the **Vue Base Enterprise** project! This documentation provides an o
 
 ## 1. Project Overview
 
-**Vue Base Enterprise** is an opinionated boilerplate for building enterprise-level applications using [Vue 3](https://vuejs.org/), [Quasar](https://quasar.dev/), and [Vite](https://vitejs.dev/). It incorporates a modular architecture and adheres to **Atomic Design principles**, allowing for scalable and maintainable codebases.
+**DotVue Architecture** is an opinionated boilerplate for building enterprise-level applications using [Vue 3](https://vuejs.org/), [Quasar](https://quasar.dev/), and [Vite](https://vitejs.dev/). It incorporates a modular architecture and adheres to **Atomic Design principles**, allowing for scalable and maintainable codebases.
 
 ## 2. Folder Structure
 
