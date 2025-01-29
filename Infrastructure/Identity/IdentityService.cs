@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Identity;
 
-public class UserService : IUserService
+public class IdentityService : IIdentityService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _claimsFactory;
     private readonly IAuthorizationService _authorizationService;
 
-    public UserService(UserManager<ApplicationUser> userManager,
+    public IdentityService(UserManager<ApplicationUser> userManager,
         IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory, IAuthorizationService authorizationService)
     {
         _userManager = userManager;

@@ -11,7 +11,8 @@ public static class SetupDependency
     public static void InitializeWebServices(this IHostApplicationBuilder builder)
     {
         builder.AddServiceDefaults();
-        // builder.Services.AddCarter();
+
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
 
         // Add architecture services
@@ -22,6 +23,7 @@ public static class SetupDependency
         builder.SetCors();
         builder.SetAuth();
         builder.SetOpenApi();
+        builder.SetDependencies();
     }
 
     public static void PostInitializeWebServices(this WebApplication app)
