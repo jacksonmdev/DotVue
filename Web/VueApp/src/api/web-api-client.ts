@@ -16,7 +16,8 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IWeatherForecastsClient {
-    getWeatherForecasts(): Observable<WeatherForecast[]>;
+    getWeatherForecastsPublic(): Observable<WeatherForecast[]>;
+    getWeatherForecastsPrivate(): Observable<WeatherForecast[]>;
 }
 
 @Injectable({
@@ -32,8 +33,8 @@ export class WeatherForecastsClient implements IWeatherForecastsClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getWeatherForecasts(): Observable<WeatherForecast[]> {
-        let url_ = this.baseUrl + "/api/WeatherForecasts";
+    getWeatherForecastsPublic(): Observable<WeatherForecast[]> {
+        let url_ = this.baseUrl + "/v1/WeatherForecasts/public";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -45,11 +46,11 @@ export class WeatherForecastsClient implements IWeatherForecastsClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetWeatherForecasts(response_);
+            return this.processGetWeatherForecastsPublic(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetWeatherForecasts(response_ as any);
+                    return this.processGetWeatherForecastsPublic(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<WeatherForecast[]>;
                 }
@@ -58,7 +59,62 @@ export class WeatherForecastsClient implements IWeatherForecastsClient {
         }));
     }
 
-    protected processGetWeatherForecasts(response: HttpResponseBase): Observable<WeatherForecast[]> {
+    protected processGetWeatherForecastsPublic(response: HttpResponseBase): Observable<WeatherForecast[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(WeatherForecast.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getWeatherForecastsPrivate(): Observable<WeatherForecast[]> {
+        let url_ = this.baseUrl + "/v1/WeatherForecasts/private";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetWeatherForecastsPrivate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetWeatherForecastsPrivate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<WeatherForecast[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<WeatherForecast[]>;
+        }));
+    }
+
+    protected processGetWeatherForecastsPrivate(response: HttpResponseBase): Observable<WeatherForecast[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :

@@ -9,7 +9,7 @@ public static class RouteMapExtensions
         var groupName = group.GetType().Name;
 
         return app
-            .MapGroup($"/api/{groupName}")
+            .MapGroup($"/v1/{groupName}")
             .WithGroupName(groupName)
             .WithTags(groupName);
     }

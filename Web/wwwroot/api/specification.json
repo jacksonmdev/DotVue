@@ -6,12 +6,35 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/WeatherForecasts": {
+    "/v1/WeatherForecasts/public": {
       "get": {
         "tags": [
           "WeatherForecasts"
         ],
-        "operationId": "GetWeatherForecasts",
+        "operationId": "GetWeatherForecastsPublic",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/WeatherForecasts/private": {
+      "get": {
+        "tags": [
+          "WeatherForecasts"
+        ],
+        "operationId": "GetWeatherForecastsPrivate",
         "responses": {
           "200": {
             "description": "",
