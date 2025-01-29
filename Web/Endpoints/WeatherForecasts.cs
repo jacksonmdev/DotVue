@@ -1,6 +1,9 @@
 
+using Application.Common.Models;
+using Application.WeatherForecasts.Queries.GetWeatherForecastById;
 using Application.WeatherForecasts.Queries.GetWeatherForecasts;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Web.Common;
 using RouteBase = Web.Common.RouteBase;
 
@@ -11,16 +14,23 @@ public class WeatherForecasts : RouteBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
-            .MapGet(GetWeatherForecastsPublic, "/public");
+            .MapGet(GetWeatherForecastsPublic, "public")
+            .MapPost(GetWeatherForecastsPublicWithPayload, "forecast");
         
         app.MapGroup(this)
             .RequireAuthorization()
-            .MapGet(GetWeatherForecastsPrivate, "/private");
+            .MapGet(GetWeatherForecastsPrivate, "private");
     }
 
     public async Task<Ok<IEnumerable<WeatherForecast>>> GetWeatherForecastsPublic(ISender sender)
     {
         var forecasts = await sender.Send(new GetWeatherForecastsQuery());
+        return TypedResults.Ok(forecasts);
+    }
+    
+    public async Task<Ok<IEnumerable<ForecastDto>>> GetWeatherForecastsPublicWithPayload(ISender sender, [FromBody] GetWeatherForecastByIdQuery query)
+    {
+        var forecasts = await sender.Send(query);
         return TypedResults.Ok(forecasts);
     }
     
