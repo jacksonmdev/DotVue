@@ -34,5 +34,7 @@ public static class SetupDependency
             .AddIdentityCore<ApplicationUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        builder.Services.AddTransient<IUserService, UserService>();
     }
 }
