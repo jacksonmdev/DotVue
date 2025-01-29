@@ -1,4 +1,4 @@
-namespace Application.WeatherForecasts.Queries.GetWeatherForecasts;
+namespace Application.Common.Models;
 
 public class WeatherForecast
 {

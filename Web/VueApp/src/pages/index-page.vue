@@ -58,6 +58,12 @@ onMounted(async () => {
     'https://localhost:7000/v1/weatherforecasts/public',
   )
   forecasts.value = (await response.json()) as WeatherForecast[]
+
+  const response2 = await fetch(
+    'https://localhost:7000/v1/weatherforecasts/forecast',
+  )
+
+  console.log(response2)
 })
 
 usePageHead({

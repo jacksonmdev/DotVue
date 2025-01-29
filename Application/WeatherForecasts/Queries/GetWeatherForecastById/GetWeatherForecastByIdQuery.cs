@@ -1,13 +1,15 @@
 using Application.Common.Models;
-using MediatR;
 
-namespace Application.WeatherForecasts.Queries.GetWeatherForecasts;
+namespace Application.WeatherForecasts.Queries.GetWeatherForecastById;
 
-public record GetWeatherForecastsQuery : IRequest<IEnumerable<WeatherForecast>>;
-
-public class GetWeatherForecastsQueryHandler : IRequestHandler<GetWeatherForecastsQuery, IEnumerable<WeatherForecast>>
+public record GetWeatherForecastByIdQuery : IRequest<IEnumerable<WeatherForecast>>
 {
-    public async Task<IEnumerable<WeatherForecast>> Handle(GetWeatherForecastsQuery request, CancellationToken cancellationToken)
+    public required int Id { get; set; }
+}
+
+public class GetWeatherForecastsByIdQueryHandler : IRequestHandler<GetWeatherForecastByIdQuery, IEnumerable<WeatherForecast>>
+{
+    public async Task<IEnumerable<WeatherForecast>> Handle(GetWeatherForecastByIdQuery request, CancellationToken cancellationToken)
     {
         var summaries = new[]
         {
