@@ -2,19 +2,19 @@
   <div class="row">
     <div class="col-12">
       <q-table
-      title="Weather Forecasts"
-      :rows="forecasts"
-      :columns="(columns as any[])"
-      row-key="name"
-    />
+        title="Weather Forecasts"
+        :rows="forecasts"
+        :columns="columns"
+        row-key="name"
+      ></q-table>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { usePageHead, t } from 'modules/base/composables'
-import type { WeatherForecast } from 'src/api/web-api-client';
-import { onMounted, ref } from 'vue';
+import type { WeatherForecast } from 'src/api/web-api-client'
+import { onMounted, ref } from 'vue'
 
 const forecasts = ref<WeatherForecast[]>([])
 
@@ -25,7 +25,7 @@ const columns = [
     required: true,
     label: 'Date',
     align: 'left',
-    sortable: true
+    sortable: true,
   },
   {
     name: 'summary',
@@ -33,7 +33,7 @@ const columns = [
     required: true,
     label: 'Summary',
     align: 'left',
-    sortable: true
+    sortable: true,
   },
   {
     name: 'temperatureC',
@@ -41,7 +41,7 @@ const columns = [
     required: true,
     label: 'Temperature (C)',
     align: 'left',
-    sortable: true
+    sortable: true,
   },
   {
     name: 'temperatureF',
@@ -49,15 +49,15 @@ const columns = [
     required: true,
     label: 'Temperature (F)',
     align: 'left',
-    sortable: true
-  }
-]
+    sortable: true,
+  },
+] as any[]
 
 onMounted(async () => {
-
-  const response = await fetch('https://localhost:7000/weather/public');
-  forecasts.value = await response.json() as WeatherForecast[];
-
+  const response = await fetch(
+    'https://localhost:7000/v1/weatherforecasts/public',
+  )
+  forecasts.value = (await response.json()) as WeatherForecast[]
 })
 
 usePageHead({
