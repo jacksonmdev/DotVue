@@ -28,7 +28,7 @@ public class WeatherForecasts : RouteBase
         return TypedResults.Ok(forecasts);
     }
     
-    public async Task<Ok<IEnumerable<WeatherForecast>>> GetWeatherForecastsPublicWithPayload(ISender sender, [FromBody] GetWeatherForecastByIdQuery query)
+    public async Task<Ok<IEnumerable<ForecastDto>>> GetWeatherForecastsPublicWithPayload(ISender sender, [FromBody] GetWeatherForecastByIdQuery query)
     {
         var forecasts = await sender.Send(query);
         return TypedResults.Ok(forecasts);

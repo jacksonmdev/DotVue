@@ -1,15 +1,23 @@
+using Application.Common.Mappings;
 using Application.Common.Models;
 
 namespace Application.WeatherForecasts.Queries.GetWeatherForecastById;
 
-public record GetWeatherForecastByIdQuery : IRequest<IEnumerable<WeatherForecast>>
+public record GetWeatherForecastByIdQuery : IRequest<IEnumerable<ForecastDto>>
 {
     public required int Id { get; set; }
 }
 
-public class GetWeatherForecastsByIdQueryHandler : IRequestHandler<GetWeatherForecastByIdQuery, IEnumerable<WeatherForecast>>
+public class GetWeatherForecastsByIdQueryHandler : IRequestHandler<GetWeatherForecastByIdQuery, IEnumerable<ForecastDto>>
 {
-    public async Task<IEnumerable<WeatherForecast>> Handle(GetWeatherForecastByIdQuery request, CancellationToken cancellationToken)
+    private readonly IMapper _mapper;
+
+    public GetWeatherForecastsByIdQueryHandler(IMapper mapper)
+    {
+        _mapper = mapper;
+    }
+    
+    public async Task<IEnumerable<ForecastDto>> Handle(GetWeatherForecastByIdQuery request, CancellationToken cancellationToken)
     {
         var summaries = new[]
         {
@@ -23,6 +31,6 @@ public class GetWeatherForecastsByIdQueryHandler : IRequestHandler<GetWeatherFor
             Date = DateTime.Now.AddDays(index),
             TemperatureC = rng.Next(-20, 55),
             Summary = summaries[rng.Next(summaries.Length)]
-        });
+        }).AsQueryable().ProjectTo<ForecastDto>(_mapper.ConfigurationProvider).AsEnumerable();
     }
 }

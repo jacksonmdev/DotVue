@@ -2,11 +2,11 @@
 
 public class ForecastDto
 {
+    public string? Summary { get; set; }
+    public int TemperatureC { get; set; }
+    
     private class Mapping : Profile
     {
-        public string? Summary { get; set; }
-        public int TemperatureC { get; set; }
-        
         public Mapping()
         {
             CreateMap<WeatherForecast, ForecastDto>();

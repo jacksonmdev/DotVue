@@ -55,7 +55,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
+                    "$ref": "#/components/schemas/ForecastDto"
                   }
                 }
               }
@@ -114,6 +114,20 @@
           "summary": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "ForecastDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "summary": {
+            "type": "string",
+            "nullable": true
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

@@ -17,7 +17,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IWeatherForecastsClient {
     getWeatherForecastsPublic(): Observable<WeatherForecast[]>;
-    getWeatherForecastsPublicWithPayload(query: GetWeatherForecastByIdQuery): Observable<WeatherForecast[]>;
+    getWeatherForecastsPublicWithPayload(query: GetWeatherForecastByIdQuery): Observable<ForecastDto[]>;
     getWeatherForecastsPrivate(): Observable<WeatherForecast[]>;
 }
 
@@ -89,7 +89,7 @@ export class WeatherForecastsClient implements IWeatherForecastsClient {
         return _observableOf(null as any);
     }
 
-    getWeatherForecastsPublicWithPayload(query: GetWeatherForecastByIdQuery): Observable<WeatherForecast[]> {
+    getWeatherForecastsPublicWithPayload(query: GetWeatherForecastByIdQuery): Observable<ForecastDto[]> {
         let url_ = this.baseUrl + "/v1/WeatherForecasts/forecast";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -112,14 +112,14 @@ export class WeatherForecastsClient implements IWeatherForecastsClient {
                 try {
                     return this.processGetWeatherForecastsPublicWithPayload(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<WeatherForecast[]>;
+                    return _observableThrow(e) as any as Observable<ForecastDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<WeatherForecast[]>;
+                return _observableThrow(response_) as any as Observable<ForecastDto[]>;
         }));
     }
 
-    protected processGetWeatherForecastsPublicWithPayload(response: HttpResponseBase): Observable<WeatherForecast[]> {
+    protected processGetWeatherForecastsPublicWithPayload(response: HttpResponseBase): Observable<ForecastDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -133,7 +133,7 @@ export class WeatherForecastsClient implements IWeatherForecastsClient {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(WeatherForecast.fromJS(item));
+                    result200!.push(ForecastDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -250,6 +250,46 @@ export interface IWeatherForecast {
     temperatureC?: number;
     temperatureF?: number;
     summary?: string | undefined;
+}
+
+export class ForecastDto implements IForecastDto {
+    summary?: string | undefined;
+    temperatureC?: number;
+
+    constructor(data?: IForecastDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.summary = _data["summary"];
+            this.temperatureC = _data["temperatureC"];
+        }
+    }
+
+    static fromJS(data: any): ForecastDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ForecastDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["summary"] = this.summary;
+        data["temperatureC"] = this.temperatureC;
+        return data;
+    }
+}
+
+export interface IForecastDto {
+    summary?: string | undefined;
+    temperatureC?: number;
 }
 
 export class GetWeatherForecastByIdQuery implements IGetWeatherForecastByIdQuery {
