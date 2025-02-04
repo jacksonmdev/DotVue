@@ -11,7 +11,7 @@ env:
   AZURE_WEB_API_PACKAGE_PATH: './publish'
   AZURE_WEB_APP_NAME: purple-hrms-web
   AZURE_WEB_APP_LOCAL_DIRECTORY: './Web/VueApp'
-  AZURE_WEB_APP_PACKAGE_PATH: './Web/VueApp/dist'
+  AZURE_WEB_APP_PACKAGE_PATH: 'dist'
 
 jobs:
   publish-back-end:
