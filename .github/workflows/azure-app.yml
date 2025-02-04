@@ -64,15 +64,11 @@ jobs:
         working-directory: ${{ env.AZURE_WEB_APP_LOCAL_DIRECTORY }}
 
       - name: Deploy to Azure App Service
-          run: |
-            # Install Azure CLI
-            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-            
-            # Login using deployment credentials
-            AZURE_APP_NAME="purple-hrms-web"
-            AZURE_RESOURCE_GROUP="rg-purple-env"
-            DEPLOYMENT_TOKEN="bda33d49acacafcb2c5d24abb6d481d29c0ac14a5fe3899169c5842f19221b7004-f5831375-23e4-435a-a557-d35d5dc4c9a2000190802c470b00"
-            
-            echo bda33d49acacafcb2c5d24abb6d481d29c0ac14a5fe3899169c5842f19221b7004-f5831375-23e4-435a-a557-d35d5dc4c9a2000190802c470b00 | az webapp deployment source config-zip --resource-group rg-purple-env --name purple-hrms-web --src dist.zip
-            
-          working-directory: ./Web/VueApp/dist  # Ensure this is correct based on your project structure
+        uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9
+        with:
+          azure_static_web_apps_api_token: bda33d49acacafcb2c5d24abb6d481d29c0ac14a5fe3899169c5842f19221b7004-f5831375-23e4-435a-a557-d35d5dc4c9a2000190802c470b00
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          app_location: ${{ env.AZURE_WEB_APP_LOCAL_DIRECTORY }}
+          api_location: ''
+          output_location: ${{ env.AZURE_WEB_APP_PACKAGE_PATH }}
