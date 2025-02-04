@@ -24,13 +24,13 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore
-        run: dotnet restore ./DotVueArchitecture.sln
+        run: dotnet restore ./Web/Web.csproj
 
       - name: Build
-        run: dotnet build ./DotVueArchitecture.sln --configuration Release --no-restore
+        run: dotnet build ./Web/Web.csproj --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish ./DotVueArchitecture.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        run: dotnet publish ./Web/Web.csproj --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
 
       - name: Deploy
         uses: Azure/webapps-deploy@v2
