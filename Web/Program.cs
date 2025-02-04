@@ -13,7 +13,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 var app = builder.Build();
 
-await app.SeedDbAsync();
+// await app.SeedDbAsync();
 
 app.PostInitializeWebServices();
 app.Run();
