@@ -29,17 +29,19 @@ public static class SetupDependency
 
     public static void PostInitializeWebServices(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
+        // if (app.Environment.IsDevelopment())
+        // {
+        //
+        // }
+        
+        app.UseSwaggerUi(settings =>
         {
-            app.UseSwaggerUi(settings =>
-            {
-                settings.Path = "/api";
-                settings.DocumentPath = "/api/specification.json";
-                settings.DocumentTitle = "DotVue API Explorer";
-            });
+            settings.Path = "/api";
+            settings.DocumentPath = "/api/specification.json";
+            settings.DocumentTitle = "DotVue API Explorer";
+        });
             
-            app.MapDefaultEndpoints();
-        }
+        app.MapDefaultEndpoints();
         
         app.MapEndpoints();
         app.UseHttpsRedirection();
