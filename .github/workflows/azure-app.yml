@@ -53,6 +53,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x.x'
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
@@ -62,9 +63,16 @@ jobs:
         run: npm run build:prod
         working-directory: ${{ env.AZURE_WEB_APP_LOCAL_DIRECTORY }}
 
-      - name: Deploy to Azure Web App
-        uses: Azure/webapps-deploy@v2
-        with:
-          azure_static_web_apps_api_token: bda33d49acacafcb2c5d24abb6d481d29c0ac14a5fe3899169c5842f19221b7004-f5831375-23e4-435a-a557-d35d5dc4c9a2000190802c470b00
-          app-name: ${{ env.AZURE_WEB_APP_NAME }}
-          package: ${{ env.AZURE_WEB_APP_PACKAGE_PATH }}
+      - name: Deploy to Azure App Service
+          run: |
+            # Install Azure CLI
+            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+            
+            # Login using deployment credentials
+            AZURE_APP_NAME="purple-hrms-web"
+            AZURE_RESOURCE_GROUP="rg-purple-env"
+            DEPLOYMENT_TOKEN="bda33d49acacafcb2c5d24abb6d481d29c0ac14a5fe3899169c5842f19221b7004-f5831375-23e4-435a-a557-d35d5dc4c9a2000190802c470b00"
+            
+            echo bda33d49acacafcb2c5d24abb6d481d29c0ac14a5fe3899169c5842f19221b7004-f5831375-23e4-435a-a557-d35d5dc4c9a2000190802c470b00 | az webapp deployment source config-zip --resource-group rg-purple-env --name purple-hrms-web --src dist.zip
+            
+          working-directory: ./Web/VueApp/dist  # Ensure this is correct based on your project structure
