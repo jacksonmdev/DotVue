@@ -65,6 +65,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: Azure/webapps-deploy@v2
         with:
+          azure_static_web_apps_api_token: bda33d49acacafcb2c5d24abb6d481d29c0ac14a5fe3899169c5842f19221b7004-f5831375-23e4-435a-a557-d35d5dc4c9a2000190802c470b00
           app-name: ${{ env.AZURE_WEB_APP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEB_APP_PUBLISH_PROFILE }}
           package: ${{ env.AZURE_WEB_APP_PACKAGE_PATH }}
