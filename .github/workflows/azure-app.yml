@@ -1,0 +1,30 @@
+name: Publish Application
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore ./DotVueArchitecture.sln
+
+      - name: Build
+        run: dotnet build ./DotVueArchitecture.sln --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./DotVueArchitecture.sln --configuration Release --no-build
+      
