@@ -17,8 +17,7 @@ public static class SetupDependency
 
         // Add architecture services
         builder.AddApplicationServices();
-        // REMOVE LATER WIP
-        // builder.AddInfrastructureServices();
+        builder.AddInfrastructureServices();
         
         // Add services to the container.
         builder.SetCors();

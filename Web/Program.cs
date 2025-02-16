@@ -13,8 +13,9 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 var app = builder.Build();
 
-// REMOVE LATER WIP
-// await app.SeedDbAsync();
+await app.SeedDbAsync();
 
 app.PostInitializeWebServices();
+
+
 app.Run();
