@@ -10,7 +10,7 @@ public static class CorsService
                 b =>
                 {
                     b.SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .WithOrigins("http://localhost:4000", "http://localhost:8080", "https://happy-smoke-0c1378700.4.azurestaticapps.net/")
+                        .WithOrigins("http://localhost:4000", "http://localhost:8080", "https://happy-smoke-0c1378700.4.azurestaticapps.net")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
