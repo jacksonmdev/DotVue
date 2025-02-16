@@ -55,12 +55,12 @@ const columns = [
 
 onMounted(async () => {
   const response = await fetch(
-    'https://localhost:7000/v1/weatherforecasts/public',
+    `${import.meta.env.VITE_API_BASE_URL}/v1/weatherforecasts/public`,
   )
   forecasts.value = (await response.json()) as WeatherForecast[]
 
   const response2 = await fetch(
-    'https://localhost:7000/v1/weatherforecasts/forecast',
+    `${import.meta.env.VITE_API_BASE_URL}/v1/weatherforecasts/forecast`,
   )
 
   console.log(response2)
