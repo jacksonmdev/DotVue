@@ -1,6 +1,7 @@
 using Application;
-// using Carter;
+using Azure.Identity;
 using Infrastructure;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Web.Common;
 using Web.Services;
 
@@ -10,11 +11,6 @@ public static class SetupDependency
 {
     public static void InitializeWebServices(this IHostApplicationBuilder builder)
     {
-        builder.Configuration.AddAzureAppConfiguration(options =>
-        {
-            options.Connect("AzureAppConfig").Select("*");
-        });
-        
         builder.AddServiceDefaults();
         
         builder.Services.AddHttpContextAccessor();
