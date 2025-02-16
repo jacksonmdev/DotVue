@@ -14,7 +14,7 @@ public static class SetupDependency
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
         var connectionString = builder.Configuration.GetConnectionString("DotVueDb");
-        
+
         // builder.AddNpgsqlDbContext<ApplicationDbContext>("DotVueDb");
         
         builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
