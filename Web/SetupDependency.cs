@@ -10,8 +10,13 @@ public static class SetupDependency
 {
     public static void InitializeWebServices(this IHostApplicationBuilder builder)
     {
+        builder.Configuration.AddAzureAppConfiguration(options =>
+        {
+            options.Connect("AzureAppConfig").Select("*");
+        });
+        
         builder.AddServiceDefaults();
-
+        
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
 
@@ -28,11 +33,6 @@ public static class SetupDependency
 
     public static void PostInitializeWebServices(this WebApplication app)
     {
-        // if (app.Environment.IsDevelopment())
-        // {
-        //
-        // }
-        
         app.UseSwaggerUi(settings =>
         {
             settings.Path = "/api";
