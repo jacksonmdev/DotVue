@@ -1,6 +1,7 @@
 using Application;
-// using Carter;
+using Azure.Identity;
 using Infrastructure;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Web.Common;
 using Web.Services;
 

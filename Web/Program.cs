@@ -1,9 +1,23 @@
 using System.Text.Json.Serialization;
 using Infrastructure.Persistence;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Web;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.InitializeWebServices();
+
+// Setup Azure App Configuration
+var endpoint = builder.Configuration.GetSection("Endpoints").GetValue<string>("AppConfiguration");
+builder.Configuration.AddAzureAppConfiguration(options =>
+{
+    options
+        .Connect(endpoint)
+        .ConfigureRefresh(refreshOptions =>
+        {
+            refreshOptions.Register("Sentinel", refreshAll: true);
+        })
+        .Select(KeyFilter.Any)
+        .Select(KeyFilter.Any,  builder.Environment.EnvironmentName);
+});
 
 // Strictly Enforce int Type on payloads
 builder.Services.ConfigureHttpJsonOptions(options =>
@@ -11,11 +25,12 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict;
 });
 
-var app = builder.Build();
+builder.InitializeWebServices();
 
-await app.SeedDbAsync();
+var app = builder.Build();
 
 app.PostInitializeWebServices();
 
+await app.SeedDbAsync();
 
 app.Run();
