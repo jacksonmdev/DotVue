@@ -6,7 +6,7 @@ using Web;
 var builder = WebApplication.CreateBuilder(args);
 
 // Setup Azure App Configuration
-var endpoint = builder.Configuration.GetSection("Endpoints").GetValue<string>("AppConfiguration");
+var endpoint = builder.Configuration.GetConnectionString("AppConfiguration");
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
     options
