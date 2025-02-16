@@ -7,9 +7,9 @@ on:
       - master
 
 env:
-  AZURE_WEB_API_NAME: purple-hrms
+  AZURE_WEB_API_NAME: purple-api
   AZURE_WEB_API_PACKAGE_PATH: './publish'
-  AZURE_WEB_APP_NAME: purple-hrms-web
+  AZURE_WEB_APP_NAME: purple
   AZURE_WEB_APP_LOCAL_DIRECTORY: './Web/VueApp'
   AZURE_WEB_APP_PACKAGE_PATH: 'dist'
 
