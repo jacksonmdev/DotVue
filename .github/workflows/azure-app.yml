@@ -27,11 +27,10 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore
-        # run: dotnet restore ./Web/Web.csproj
-        run: dotnet restore ./DotVueArchitecture.sln
+        run: dotnet restore ./Web/Web.csproj
 
       - name: Run Unit Tests
-        run: dotnet test ./DotVueArchitecture.sln --configuration Release --no-restore"
+        run: dotnet test ./UnitTests/UnitTests.csproj --configuration Release"
 
       - name: Build
         run: dotnet build ./Web/Web.csproj --configuration Release --no-restore
