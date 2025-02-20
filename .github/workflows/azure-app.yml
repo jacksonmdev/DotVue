@@ -35,6 +35,9 @@ jobs:
       - name: Build
         run: dotnet build ./Web/Web.csproj --configuration Release --no-restore
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       - name: Snyk Security Scan
         uses: snyk/actions/dotnet@master
         with:
