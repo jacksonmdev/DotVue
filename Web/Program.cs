@@ -38,3 +38,5 @@ app.PostInitializeWebServices();
 await app.SeedDbAsync();
 
 app.Run();
+
+public partial class Program { }
