@@ -30,7 +30,9 @@ jobs:
         run: dotnet restore ./Web/Web.csproj
 
       - name: Run Unit Tests
-        run: dotnet test ./UnitTests/UnitTests.csproj --configuration Release --no-restore
+        run: dotnet test ./UnitTests/UnitTests.csproj --configuration Release --no-restore --logger "console;verbosity=detailed"
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Build
         run: dotnet build ./Web/Web.csproj --configuration Release --no-restore
