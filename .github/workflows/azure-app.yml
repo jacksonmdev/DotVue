@@ -35,6 +35,13 @@ jobs:
       - name: Build
         run: dotnet build ./Web/Web.csproj --configuration Release --no-restore
 
+      - name: Snyk Security Scan
+        uses: snyk/actions/dotnet@master
+        with:
+          args: --file=./Web/Web.csproj
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
       - name: Publish
         run: dotnet publish ./Web/Web.csproj --configuration Release --no-build --output '${{ env.AZURE_WEB_API_PACKAGE_PATH }}'
 
