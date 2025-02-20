@@ -27,12 +27,11 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore
-        run: dotnet restore ./Web/Web.csproj
+        # run: dotnet restore ./Web/Web.csproj
+        run: dotnet restore ./DotVueArchitecture.sln
 
       - name: Run Unit Tests
-        run: dotnet test ./UnitTests/UnitTests.csproj --configuration Release --no-restore --logger "console;verbosity=detailed"
-        env:
-          ACTIONS_STEP_DEBUG: true
+        run: dotnet test ./DotVueArchitecture.sln --configuration Release --no-restore"
 
       - name: Build
         run: dotnet build ./Web/Web.csproj --configuration Release --no-restore
