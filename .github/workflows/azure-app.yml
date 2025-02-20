@@ -43,7 +43,7 @@ jobs:
         run: dotnet test ./DotVueArchitecture.sln --configuration Release --no-restore --no-build
 
       - name: Publish
-        run: dotnet publish ./DotVueArchitecture.sln --configuration Release --no-build --output '${{ env.AZURE_WEB_API_PACKAGE_PATH }}'
+        run: dotnet publish ./Web/Web.csproj --configuration Release --no-build --output '${{ env.AZURE_WEB_API_PACKAGE_PATH }}'
 
       - name: Deploy
         uses: Azure/webapps-deploy@v2
