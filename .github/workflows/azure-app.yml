@@ -38,7 +38,7 @@ jobs:
       - name: Snyk Security Scan
         uses: snyk/actions/dotnet@master
         with:
-          args: --file=./Web/Web.csproj
+          args: --file=./Web/Web.csproj --package-manager=nuget
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
