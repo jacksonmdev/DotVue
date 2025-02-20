@@ -32,12 +32,12 @@ jobs:
       - name: Build
         run: dotnet build ./DotVueArchitecture.sln --configuration Release --no-restore
 
-      # - name: Snyk Security Scan
-      #   uses: snyk/actions/dotnet@master
-      #   with:
-      #     args: --file=./DotVueArchitecture.sln --package-manager=nuget
-      #   env:
-      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Snyk Security Scan
+        uses: snyk/actions/dotnet@master
+        with:
+          args: --file=./DotVueArchitecture.sln --package-manager=nuget
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Unit Tests
         run: dotnet test ./DotVueArchitecture.sln --configuration Release --no-restore --no-build
