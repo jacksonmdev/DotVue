@@ -76,7 +76,7 @@ jobs:
         run: npm install -g @testim/testim-cli
 
       - name: Run Testim
-        run: testim --token "vDKAztwUTlOmIgx53Mln2GJzORDRl8xeHusgdbVuTEvhPWLvLK" --project "lQJ7O5JnhnYAVftpxUYU" --grid "Testim-Grid" --branch "master"
+        run: testim --token '${{ secrets.TESTIM_TOKEN }}' --project '${{ secrets.TESTIM_PROJECT }}' --grid "Testim-Grid" --branch "master"
 
       - name: Deploy to Azure App Service
         uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9
