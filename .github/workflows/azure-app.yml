@@ -27,26 +27,23 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore
-        run: dotnet restore ./Web/Web.csproj
-
-      - name: Run Unit Tests
-        run: dotnet test ./UnitTests/UnitTests.csproj --configuration Release
+        run: dotnet restore ./DotVueArchitecture.sln
 
       - name: Build
-        run: dotnet build ./Web/Web.csproj --configuration Release --no-restore
+        run: dotnet build ./DotVueArchitecture.sln --configuration Release --no-restore
 
-      - name: Install Snyk CLI
-        run: npm install -g snyk
+      - name: Run Unit Tests
+        run: dotnet test ./DotVueArchitecture.sln --configuration Release --no-restore --no-build
 
       - name: Snyk Security Scan
         uses: snyk/actions/dotnet@master
-        with:
-          args: --file=./Web/Web.csproj --package-manager=nuget
+        # with:
+        #   args: --file=./Web/Web.csproj --package-manager=nuget
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Publish
-        run: dotnet publish ./Web/Web.csproj --configuration Release --no-build --output '${{ env.AZURE_WEB_API_PACKAGE_PATH }}'
+        run: dotnet publish ./DotVueArchitecture.sln --configuration Release --no-build --output '${{ env.AZURE_WEB_API_PACKAGE_PATH }}'
 
       - name: Deploy
         uses: Azure/webapps-deploy@v2
