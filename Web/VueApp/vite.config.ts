@@ -19,27 +19,24 @@ export default defineConfig({
     VitePWA({
       injectRegister: 'auto',
       registerType: 'autoUpdate',
-      devOptions: {
-        enabled: true
-      },
-      manifest: {
-        name: 'Dotvue',
-        short_name: 'DotVue',
-        description: 'Opinionated .Net Architecture with Vue',
-        theme_color: '#ffffff',
-        icons: [
-          {
-            src: 'vite.svg',
-            sizes: '192x192',
-            type: 'image/svg+xml'
-          },
-          {
-            src: 'vite.svg',
-            sizes: '512x512',
-            type: 'image/svg+xml'
-          }
-        ]
-      }
+      // manifest: {
+      //   name: 'Dotvue',
+      //   short_name: 'DotVue',
+      //   description: 'Opinionated .Net Architecture with Vue',
+      //   theme_color: '#ffffff',
+      //   icons: [
+      //     {
+      //       src: 'vite.svg',
+      //       sizes: '192x192',
+      //       type: 'image/svg+xml'
+      //     },
+      //     {
+      //       src: 'vite.svg',
+      //       sizes: '512x512',
+      //       type: 'image/svg+xml'
+      //     }
+      //   ]
+      // }
     })
   ],
   resolve: {
