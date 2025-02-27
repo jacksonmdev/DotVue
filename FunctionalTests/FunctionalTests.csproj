@@ -25,8 +25,4 @@
     <ProjectReference Include="..\Web\Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BlogPost\Commands\" />
-  </ItemGroup>
-
 </Project>

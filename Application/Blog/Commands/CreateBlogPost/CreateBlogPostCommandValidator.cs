@@ -11,7 +11,6 @@ public class CreateBlogPostCommandValidator : AbstractValidator<CreateBlogPostCo
 
         RuleFor(v => v.Status)
             .NotNull()
-            .NotEmpty()
             .WithMessage(v => $"{nameof(CreateBlogPostCommand.Status)} required");
     }
 }

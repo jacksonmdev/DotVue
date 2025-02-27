@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Domain.Entities;
 using Domain.Enums;
 
 namespace Application.Blog.Commands.CreateBlogPost;
@@ -20,6 +21,9 @@ public class CreateBlogPostCommandHandler : IRequestHandler<CreateBlogPostComman
     
     public async Task<int> Handle(CreateBlogPostCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var entity = new BlogPost { Title = request.Title, Status = request.Status };
+        _context.BlogPosts.Add(entity);
+        await _context.SaveChangesAsync(cancellationToken);
+        return entity.Id;
     }
 }
