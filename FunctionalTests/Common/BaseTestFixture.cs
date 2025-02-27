@@ -1,6 +1,6 @@
 namespace FunctionalTests.Common;
 
-using static Testing;
+using static FunctionalTests.Testing;
 
 [TestFixture]
 public abstract class BaseTestFixture

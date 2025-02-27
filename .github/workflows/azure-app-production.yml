@@ -29,6 +29,9 @@ jobs:
       - name: Restore
         run: dotnet restore ./DotVueArchitecture.sln
 
+      - name: Run Unit Tests
+        run: dotnet test ./UnitTests/UnitTests.csproj --configuration Release --no-restore
+
       - name: Build
         run: dotnet build ./DotVueArchitecture.sln --configuration Release --no-restore
 
