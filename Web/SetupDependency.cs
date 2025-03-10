@@ -46,6 +46,6 @@ public static class SetupDependency
         app.UseCors("CORS");
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseHangfire(app.Environment);
+        app.UseHangfire(app.Configuration, app.Environment);
     }
 }

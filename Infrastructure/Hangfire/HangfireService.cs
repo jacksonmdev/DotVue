@@ -24,9 +24,10 @@ public static class HangfireService
         services.AddHangfireServer();
     }
 
-    public static void UseHangfire(this IApplicationBuilder app, IWebHostEnvironment env)
+    public static void UseHangfire(this IApplicationBuilder app, IConfiguration configuration, IWebHostEnvironment env)
     {
-        app.UseHangfireDashboard("/hangfire");
+        app.UseHangfireDashboard("/hangfire" /*,
+            new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter(configuration) }}*/);
         // RecurringJob.AddOrUpdate<IScheduledServices>("JobName",
         //     x => x.YourJobProcess(CancellationToken.None), Cron.Hourly);
     }
