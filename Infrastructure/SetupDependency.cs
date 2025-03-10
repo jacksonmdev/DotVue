@@ -14,16 +14,11 @@ public static class SetupDependency
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
         var connectionString = builder.Configuration.GetConnectionString("DotVueDb");
-
-        // builder.AddNpgsqlDbContext<ApplicationDbContext>("DotVueDb");
         
         builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
-            // options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseNpgsql(connectionString);
+            options.UseSqlServer(connectionString);
         });
-        
-        // builder.EnrichNpgsqlDbContext<ApplicationDbContext>();
 
         builder.Services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetRequiredService<ApplicationDbContext>());
