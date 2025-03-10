@@ -29,7 +29,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict;
 });
 
-builder.InitializeWebServices();
+builder.InitializeWebServices(builder.Environment);
 
 var app = builder.Build();
 
