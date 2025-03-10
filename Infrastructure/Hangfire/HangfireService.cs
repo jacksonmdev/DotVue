@@ -1,4 +1,5 @@
-﻿using Hangfire;
+﻿using Application.Common.Interfaces;
+using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +13,7 @@ public static class HangfireService
     public static void SetupHangfire(this IServiceCollection services, IConfiguration configuration,
          IWebHostEnvironment env)
     {
-        // services.AddScoped<IJobService, JobService>();
+        services.AddScoped<IScheduledJobService, ScheduledJobService>();
         services.AddHangfire(config => config.UseSqlServerStorage(configuration.GetConnectionString("DotVueDb"),
                 new SqlServerStorageOptions()
                 {
@@ -26,9 +27,11 @@ public static class HangfireService
 
     public static void UseHangfire(this IApplicationBuilder app, IConfiguration configuration, IWebHostEnvironment env)
     {
+        
         app.UseHangfireDashboard("/hangfire" /*,
             new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter(configuration) }}*/);
-        // RecurringJob.AddOrUpdate<IScheduledServices>("JobName",
-        //     x => x.YourJobProcess(CancellationToken.None), Cron.Hourly);
+        
+        RecurringJob.AddOrUpdate<IScheduledJobService>("CalculateSum",
+            x => x.ScheduledCalculateSum(), Cron.Minutely);
     }
 }
