@@ -1,4 +1,4 @@
-# DotVue: An Opinionated Full-Stack Framework with .NET and Vue.js
+# MotoMerkado API
 
 This repository offers an opinionated approach to building modern web applications by combining the power of **.NET** on the back-end and **Vue.js** on the front-end. Designed to simplify decision-making, it provides a structured, streamlined setup for developers who want to focus on creating rather than configuring.
 
@@ -18,13 +18,13 @@ Perfect for teams and individuals seeking a guided, efficient full-stack develop
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/yourusername/dotvue.git
+   git clone https://github.com/yourusername/motomerkado-api.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd dotvue
+   cd motomerkado-api
    ```
 
 3. Follow the setup instructions for both the **.NET back-end** and the **Vue.js front-end** in their respective folders.

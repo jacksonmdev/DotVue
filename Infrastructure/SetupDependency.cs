@@ -13,7 +13,7 @@ public static class SetupDependency
 {
     public static void AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("DotVueDb");
+        var connectionString = builder.Configuration.GetConnectionString("MotoMerkadoDb");
         
         builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {

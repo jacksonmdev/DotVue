@@ -12,7 +12,6 @@ public static class SetupDependency
 {
     public static void InitializeWebServices(this IHostApplicationBuilder builder, IWebHostEnvironment env)
     {
-        builder.AddServiceDefaults();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.SetupHangfire(builder.Configuration, env);
@@ -34,11 +33,9 @@ public static class SetupDependency
         {
             settings.Path = "/api";
             settings.DocumentPath = "/api/specification.json";
-            settings.DocumentTitle = "DotVue API Explorer";
+            settings.DocumentTitle = "MotoMerkado API Explorer";
         });
             
-        app.MapDefaultEndpoints();
-        
         app.MapEndpoints();
         app.UseHttpsRedirection();
         app.UseStaticFiles();

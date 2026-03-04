@@ -1,24 +1,25 @@
 using System.Data.Common;
 using Infrastructure.Persistence;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Npgsql;
 using Respawn;
-using Testcontainers.PostgreSql;
+using Testcontainers.MsSql;
 
 namespace FunctionalTests.Common;
 
-public class PostgreSQLTestcontainersTestDatabase : ITestDatabase
+public class SqlServerTestcontainersTestDatabase : ITestDatabase
 {
-    private const string DefaultDatabase = "dotvue_db";
-    private readonly PostgreSqlContainer _container;
+    private const string DefaultDatabase = "motomerkado_db";
+    private readonly MsSqlContainer _container;
     private DbConnection _connection = null!;
     private string _connectionString = null!;
     private Respawner _respawner = null!;
 
-    public PostgreSQLTestcontainersTestDatabase()
+    public SqlServerTestcontainersTestDatabase()
     {
-        _container = new PostgreSqlBuilder()
+        _container = new MsSqlBuilder()
+            .WithPassword("slump6Fluent6sal!va")
             .WithAutoRemove(true)
             .Build();
     }
@@ -26,19 +27,18 @@ public class PostgreSQLTestcontainersTestDatabase : ITestDatabase
     public async Task InitialiseAsync()
     {
         await _container.StartAsync();
-        await _container.ExecScriptAsync($"CREATE DATABASE {DefaultDatabase}");
 
-        var builder = new NpgsqlConnectionStringBuilder(_container.GetConnectionString())
+        var builder = new SqlConnectionStringBuilder(_container.GetConnectionString())
         {
-            Database = DefaultDatabase
+            InitialCatalog = DefaultDatabase
         };
 
         _connectionString = builder.ConnectionString;
 
-        _connection = new NpgsqlConnection(_connectionString);
+        _connection = new SqlConnection(_connectionString);
 
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseNpgsql(_connectionString)
+            .UseSqlServer(_connectionString)
             .ConfigureWarnings(warnings => warnings.Log(RelationalEventId.PendingModelChangesWarning))
             .Options;
 
@@ -49,7 +49,7 @@ public class PostgreSQLTestcontainersTestDatabase : ITestDatabase
         await _connection.OpenAsync();
         _respawner = await Respawner.CreateAsync(_connection, new RespawnerOptions
         {
-            DbAdapter = DbAdapter.Postgres,
+            DbAdapter = DbAdapter.SqlServer,
             TablesToIgnore = ["__EFMigrationsHistory"]
         });
         await _connection.CloseAsync();

@@ -9,7 +9,7 @@ public static class OpenApiService
     {
         builder.Services.AddOpenApiDocument((configure, sp) =>
         {
-            configure.Title = "DotVue API";
+            configure.Title = "MotoMerkado API";
             
             // Add JWT
             configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme

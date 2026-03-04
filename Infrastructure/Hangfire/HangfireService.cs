@@ -14,7 +14,7 @@ public static class HangfireService
          IWebHostEnvironment env)
     {
         services.AddScoped<IScheduledJobService, ScheduledJobService>();
-        services.AddHangfire(config => config.UseSqlServerStorage(configuration.GetConnectionString("DotVueDb"),
+        services.AddHangfire(config => config.UseSqlServerStorage(configuration.GetConnectionString("MotoMerkadoDb"),
                 new SqlServerStorageOptions()
                 {
                     QueuePollInterval = TimeSpan.FromMinutes(5), PrepareSchemaIfNecessary = true,

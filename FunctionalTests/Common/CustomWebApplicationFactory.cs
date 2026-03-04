@@ -27,7 +27,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
 
-        builder.UseSetting("ConnectionStrings:DotVueDb", _connectionString);
+        builder.UseSetting("ConnectionStrings:MotoMerkadoDb", _connectionString);
 
         builder.ConfigureTestServices(services =>
         {
@@ -40,7 +40,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 .AddDbContext<ApplicationDbContext>((sp, options) =>
                 {
                     options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-                    options.UseNpgsql(_connection);
+                    options.UseSqlServer(_connection);
                 });
         });
     }
