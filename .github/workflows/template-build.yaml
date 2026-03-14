@@ -1,0 +1,41 @@
+name: Template - Build Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        type: string
+        required: true
+        default: 'staging'
+      DOTNET_VERSION:
+        type: string
+        required: true
+        default: '9.0.x'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git - Checkout repository
+        uses: actions/checkout@v6
+
+      - name: DotNet - Setup
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ inputs.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore ./MotoMerkado.API.sln
+
+      - name: Build application
+        run: dotnet build ./MotoMerkado.API.sln --configuration Release --no-restore
+
+      - name: Publish application
+        run: dotnet publish ./Web/Web.csproj --configuration Release --no-build --output ./publish
+
+      - name: Artifact - Upload application
+        uses: actions/upload-artifact@v6
+        with:
+          name: publish-${{ inputs.ENVIRONMENT }}
+          path: ./publish

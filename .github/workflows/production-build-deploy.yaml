@@ -1,0 +1,28 @@
+name: Production Deployment
+run-name: 'Production Deployment #${{ github.run_number }}'
+
+on:
+  push:
+    branches: [master]
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/template-build.yaml
+    with:
+      ENVIRONMENT: production
+      DOTNET_VERSION: '9.0.x'
+    secrets: inherit
+
+  cd:
+    name: CD
+    needs: ci
+    uses: ./.github/workflows/template-deploy.yaml
+    with:
+      ENVIRONMENT: production
+      AZURE_WEB_APP_NAME: motomerkado-api
+    secrets: inherit
